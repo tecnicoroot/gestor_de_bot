@@ -12,13 +12,15 @@ class LoginController:
         try:
             if self.user_dao.autenticar(usuario, senha):
                 self.view.withdraw()
-                self.abrir_principal()
+                user_login = self.user_dao.usuario(usuario)
+
+                self.abrir_principal(user_login)
             else:
                                
                 self.view.exibir_erro("Usuário ou senha incorretos")
         finally:
             self.db.close()
 
-    def abrir_principal(self):
-        principal = PrincipalView(self.view)
+    def abrir_principal(self, user_login):
+        principal = PrincipalView(self.view, user_login)
         principal.grab_set()

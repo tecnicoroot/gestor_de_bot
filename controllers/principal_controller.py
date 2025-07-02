@@ -1,4 +1,5 @@
 from views.crud_exemplo_view import CrudExemploView
+from tkinter import messagebox
 
 class PrincipalController:
     def __init__(self, view):
@@ -9,5 +10,6 @@ class PrincipalController:
         crud.grab_set()
 
     def sair(self):
-        self.view.destroy()
-        self.view.master.deiconify()  # Reexibe login
+        if messagebox.askyesno("Sair", "Deseja realmente sair?"):
+            self.view.destroy()
+            self.view.master.deiconify()  # Reexibe login

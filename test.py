@@ -16,10 +16,10 @@ if dao.criar("admin", "senha123"):
 if dao.autenticar("admin", "senha123"):
     print("Autenticação bem-sucedida!")
 
-dao.redefinir_senha("admin", "nova123")
+#dao.redefinir_senha("admin", "nova123")
 
-if dao.autenticar("admin", "nova123"):
-    print("Senha redefinida com sucesso!")
+#if dao.autenticar("admin", "nova123"):
+#    print("Senha redefinida com sucesso!")
 
 print("Usuários cadastrados:")
 for user in dao.listar_usuarios():

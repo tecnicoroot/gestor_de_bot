@@ -33,3 +33,7 @@ class UsuarioDAO:
 
     def listar_usuarios(self):
         return self.db.query(Usuario).all()
+    
+    def usuario(self, username: str) -> Usuario:
+        usuario = self.db.query(Usuario).filter_by(username=username).first()
+        return usuario

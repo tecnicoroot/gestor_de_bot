@@ -1,12 +1,13 @@
 import customtkinter as ctk
 from controllers.login_controller import LoginController
-from utils import centralizar_janela  # se estiver separado
+from utils import centralizar_janela , rgb_para_hex# se estiver separado
+import tkinter.font as tkfont  # Certifique-se de importar isso no início do seu arquivo
 
 class LoginView(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Login")
-        self.geometry("300x200")
+        #self.geometry("300x200")
         largura = 300
         altura = 200
         centralizar_janela(self, largura, altura)
@@ -18,15 +19,20 @@ class LoginView(ctk.CTk):
         self.columnconfigure(1, weight=2)
 
         # Usuário
-        self.label_user = ctk.CTkLabel(self, text="Usuário")
-        self.label_user.grid(row=0, column=0, padx=10, pady=(20, 5), sticky="e")
+        bold_font = ctk.CTkFont(family="Arial", size=12, weight="bold")
+        self.label_user = ctk.CTkLabel(self, text="Usuário", font=bold_font)
+        self.label_user.grid(row=0, column=0, padx=10, pady=(20, 5))
 
         self.entry_user = ctk.CTkEntry(self)
         self.entry_user.grid(row=0, column=1, padx=10, pady=(15, 5), sticky="we")
-
+        # Evento ao focar (clicar)
+        self.entry_user.bind("<FocusIn>", lambda e: self.entry_user.configure(border_color=rgb_para_hex(0,255,0)))
+        # Evento ao perder o foco (clicar fora)
+        self.entry_user.bind("<FocusOut>", lambda e: self.entry_user.configure(border_color="gray"))
+        
         # Senha
-        self.label_pass = ctk.CTkLabel(self, text="Senha")
-        self.label_pass.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.label_pass = ctk.CTkLabel(self, text="Senha", font=bold_font)
+        self.label_pass.grid(row=1, column=0, padx=10, pady=5)
 
         self.entry_pass = ctk.CTkEntry(self, show="*")
         self.entry_pass.grid(row=1, column=1, padx=10, pady=5, sticky="we")
