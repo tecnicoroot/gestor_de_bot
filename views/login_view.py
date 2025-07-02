@@ -10,6 +10,7 @@ class LoginView(ctk.CTk):
         #self.geometry("300x200")
         largura = 300
         altura = 200
+        self.configure(fg_color="#aee1ab")  # OK: define cor de fundo da janela
         centralizar_janela(self, largura, altura)
 
         self.controller = LoginController(self)
