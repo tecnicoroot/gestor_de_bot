@@ -12,7 +12,7 @@ class LoginView(ctk.CTk):
         altura = 200
         self.configure(fg_color="#aee1ab")  # OK: define cor de fundo da janela
         centralizar_janela(self, largura, altura)
-
+        
         self.controller = LoginController(self)
 
         # Configure grid layout
@@ -27,7 +27,7 @@ class LoginView(ctk.CTk):
         self.entry_user = ctk.CTkEntry(self)
         self.entry_user.grid(row=0, column=1, padx=10, pady=(15, 5), sticky="we")
         # Evento ao focar (clicar)
-        self.entry_user.bind("<FocusIn>", lambda e: self.entry_user.configure(border_color=rgb_para_hex(0,255,0)))
+        self.entry_user.bind("<FocusIn>", lambda e: self.entry_user.configure(border_color=rgb_para_hex(0,128,0)))
         # Evento ao perder o foco (clicar fora)
         self.entry_user.bind("<FocusOut>", lambda e: self.entry_user.configure(border_color="gray"))
         
@@ -40,11 +40,23 @@ class LoginView(ctk.CTk):
 
         # Botão de login
         self.btn_login = ctk.CTkButton(self, text="Entrar", command=self.autenticar)
-        self.btn_login.grid(row=2, column=0, columnspan=2, pady=10)
+        self.btn_login.grid(row=2, column=0, columnspan=2, pady=5)
+
+        self.link_sobre = ctk.CTkLabel(self, text="Sobre", text_color="blue", cursor="hand2")
+        self.link_sobre.grid(row=3, column=0, columnspan=2, pady=1)
+
+        # Sublinha o texto (simulando um link)
+        font_link = ctk.CTkFont(underline=True)
+        self.link_sobre.configure(font=font_link)
+
+        # Evento de clique
+        self.link_sobre.bind("<Button-1>", lambda e: self.exibir_sobre())
+        self.link_sobre.bind("<Enter>", lambda e: self.link_sobre.configure(text_color="darkblue"))
+        self.link_sobre.bind("<Leave>", lambda e: self.link_sobre.configure(text_color="blue"))
 
         # Mensagem de erro
         self.label_erro = ctk.CTkLabel(self, text="", text_color="red")
-        self.label_erro.grid(row=3, column=0, columnspan=2)
+        self.label_erro.grid(row=4, column=0, columnspan=2)
 
         # Enter para login
         self.bind("<Return>", lambda event: self.autenticar())
@@ -56,6 +68,10 @@ class LoginView(ctk.CTk):
         self.label_erro.configure(text="")  # limpa antes de tentar
         self.controller.autenticar(usuario, senha)
 
+    
+    def exibir_sobre(self):
+        self.controller.abrir_sobre()
+    
     def exibir_erro(self, mensagem):
         print(f"Exibindo erro: {mensagem}")  # ← Debug
         if self.label_erro:

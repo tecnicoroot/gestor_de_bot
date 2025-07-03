@@ -1,4 +1,4 @@
-def centralizar_janela(janela, largura, altura, forcar_visivel=True):
+def centralizar_janela(janela, largura, altura, forcar_visivel=False):
     """
     Centraliza a janela na tela, com suporte para monitores com diferentes resoluções e escalas DPI.
     
@@ -12,16 +12,18 @@ def centralizar_janela(janela, largura, altura, forcar_visivel=True):
     # Obtém dimensões da tela
     largura_tela = janela.winfo_screenwidth()
     altura_tela = janela.winfo_screenheight()
-
-    # Calcula posição central
-    pos_x = int((largura_tela - largura) / 2)
-    pos_y = int((altura_tela - altura) / 2)
+    print(f" {largura_tela} X{altura_tela}")
+    # Calcula coordenadas para centralizar
+    pos_x = int((largura_tela / 2) - (largura / 2))
+    
+    pos_y = int((altura_tela / 2) - (altura / 2))
 
     # Opcional: evita posições negativas caso a janela seja maior que a tela
     if forcar_visivel:
         pos_x = max(pos_x, 0)
         pos_y = max(pos_y, 0)
 
+    print(f"{largura}x{altura}+{pos_x}+{pos_y}")
     janela.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")
 
 
