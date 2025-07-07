@@ -1,30 +1,41 @@
-def centralizar_janela(janela, largura, altura, forcar_visivel=False):
-    """
-    Centraliza a janela na tela, com suporte para monitores com diferentes resoluções e escalas DPI.
-    
-    :param janela: instância da janela (Tk, CTk ou Toplevel)
-    :param largura: largura desejada da janela
-    :param altura: altura desejada da janela
-    :param forcar_visivel: garante que a janela não fique fora da tela mesmo em setups com múltiplos monitores
-    """
-    janela.update_idletasks()  # Atualiza geometria interna antes de medir
+from screeninfo import get_monitors
+import tkinter as tk
+from typing import Union
 
-    # Obtém dimensões da tela
-    largura_tela = janela.winfo_screenwidth()
-    altura_tela = janela.winfo_screenheight()
-    
-    # Calcula coordenadas para centralizar
-    pos_x = int((largura_tela / 2) - (largura / 2))
-    
-    pos_y = int((altura_tela / 2) - (altura / 2))
+def centralizar_janela_multi(janela: Union[tk.Tk, tk.Toplevel], largura: int, altura: int, forcar_visivel: bool = True):
+    """
+    Centraliza a janela na tela onde ela está atualmente, suportando múltiplos monitores.
 
-    # Opcional: evita posições negativas caso a janela seja maior que a tela
+    :param janela: instância Tk ou Toplevel
+    :param largura: largura desejada (pixels)
+    :param altura: altura desejada (pixels)
+    :param forcar_visivel: se True, impede que a janela fique em posição negativa
+    """
+    janela.update_idletasks()
+    x_win = janela.winfo_x()
+    y_win = janela.winfo_y()
+
+    # Determina o monitor ativo usando coordenadas da janela
+    monitores = get_monitors()
+    monitor = None
+    for m in reversed(monitores):
+        if m.x <= x_win <= m.x + m.width and m.y <= y_win <= m.y + m.height:
+            monitor = m
+            break
+    if monitor is None:
+        monitor = next((m for m in monitores if m.is_primary), monitores[0])
+
+    # Calcula posição central no monitor selecionado
+    pos_x = monitor.x + (monitor.width - largura) // 2
+    pos_y = monitor.y + (monitor.height - altura) // 2
+
+    # Garante visibilidade caso forcar_visivel=True
     if forcar_visivel:
-        pos_x = max(pos_x, 0)
-        pos_y = max(pos_y, 0)
+        pos_x = max(pos_x, monitor.x)
+        pos_y = max(pos_y, monitor.y)
 
-    
     janela.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")
+
 
 
 

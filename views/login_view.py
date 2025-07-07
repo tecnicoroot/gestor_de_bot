@@ -1,17 +1,16 @@
 import customtkinter as ctk
 from controllers.login_controller import LoginController
-from utils import centralizar_janela , rgb_para_hex# se estiver separado
+from utils import centralizar_janela_multi , rgb_para_hex# se estiver separado
 import tkinter.font as tkfont  # Certifique-se de importar isso no início do seu arquivo
 
 class LoginView(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Login")
-        #self.geometry("300x200")
-        largura = 300
-        altura = 200
+        self.geometry("300x200")
+        
         self.configure(fg_color="#aee1ab")  # OK: define cor de fundo da janela
-        centralizar_janela(self, largura, altura)
+        centralizar_janela_multi(self, 300, 200)
         
         self.controller = LoginController(self)
 

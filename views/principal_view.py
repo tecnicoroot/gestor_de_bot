@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from controllers.principal_controller import PrincipalController
-from utils import centralizar_janela
+from utils import centralizar_janela_multi
 from tkinter import messagebox
 
 class PrincipalView(ctk.CTkToplevel):
@@ -9,10 +9,10 @@ class PrincipalView(ctk.CTkToplevel):
         self.master = master
         self.user_login = user_login
         self.title("Tela Principal")
-        #self.geometry("600x400")
+        self.geometry("1366x786")
         largura = 1366
         altura = 786
-        centralizar_janela(self, largura, altura)
+        centralizar_janela_multi(self, largura, altura)
         self.controller = PrincipalController(self)
 
         self.label = ctk.CTkLabel(self, text=f"Bem-vindo! {self.user_login.username}")

@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from utils import centralizar_janela, rgb_para_hex  # Certifique-se que esses utilitários existem
+from utils import centralizar_janela_multi, rgb_para_hex  # Certifique-se que esses utilitários existem
 import tkinter.font as tkfont  # Para customizar fontes
 
 class SobreView(ctk.CTkToplevel):
@@ -10,7 +10,7 @@ class SobreView(ctk.CTkToplevel):
         largura = 300
         altura = 200
         self.configure(fg_color="#aee1ab")
-        centralizar_janela(self, largura, altura)
+        centralizar_janela_multi(self, largura, altura)
 
         self.resizable(False, False)
         self.transient(master)
