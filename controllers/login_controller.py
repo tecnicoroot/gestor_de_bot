@@ -1,21 +1,20 @@
 from database.db import SessionLocal, engine
-from models.dao.user_dao import UsuarioDAO
+
 from views.principal_view import PrincipalView
 from views.sobre_view import SobreView
-
+from services.usuario_service import UsuarioService
 class LoginController:
     def __init__(self, view):
         self.view = view
         self.db = SessionLocal()
-        self.user_dao = UsuarioDAO(self.db)
+        self.user_service = UsuarioService(SessionLocal)
         self.sobre_janela = None  # <-- Controlador da janela "Sobre"
 
     def autenticar(self, usuario, senha):
         try:
-            if self.user_dao.autenticar(usuario, senha):
+            if self.user_service.autenticar_usuario(usuario, senha):
                 self.view.withdraw()
-                user_login = self.user_dao.usuario(usuario)
-
+                user_login = self.user_service.buscar_usuario_name(usuario)
                 self.abrir_principal(user_login)
             else:
                                

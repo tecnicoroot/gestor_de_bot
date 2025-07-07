@@ -12,7 +12,7 @@ def centralizar_janela(janela, largura, altura, forcar_visivel=False):
     # Obtém dimensões da tela
     largura_tela = janela.winfo_screenwidth()
     altura_tela = janela.winfo_screenheight()
-    print(f" {largura_tela} X{altura_tela}")
+    
     # Calcula coordenadas para centralizar
     pos_x = int((largura_tela / 2) - (largura / 2))
     
@@ -23,7 +23,7 @@ def centralizar_janela(janela, largura, altura, forcar_visivel=False):
         pos_x = max(pos_x, 0)
         pos_y = max(pos_y, 0)
 
-    print(f"{largura}x{altura}+{pos_x}+{pos_y}")
+    
     janela.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")
 
 

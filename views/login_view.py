@@ -73,7 +73,7 @@ class LoginView(ctk.CTk):
         self.controller.abrir_sobre()
     
     def exibir_erro(self, mensagem):
-        print(f"Exibindo erro: {mensagem}")  # ← Debug
+        
         if self.label_erro:
             self.label_erro.configure(text=mensagem)
         

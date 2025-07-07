@@ -9,8 +9,8 @@ class PrincipalView(ctk.CTkToplevel):
         self.master = master
         self.user_login = user_login
         self.title("Tela Principal")
-        self.geometry("600x400")
-        largura = 1024
+        #self.geometry("600x400")
+        largura = 1366
         altura = 786
         centralizar_janela(self, largura, altura)
         self.controller = PrincipalController(self)
