@@ -1,5 +1,8 @@
 from database.db import SessionLocal, engine
+import sys
+import os
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from views.main_view import MainView
 from views.about_view import AboutView
 from services.user_service import UserService
@@ -26,7 +29,7 @@ class LoginController:
         principal = MainView(self.view, user_login)
         principal.grab_set()
 
-    def show_error(self):
+    def show_about(self):
         if self.about_window is None or not self.about_window.winfo_exists():
             self.about_window = AboutView(self.view)
             

@@ -26,9 +26,10 @@ class UserDAO(BaseDAO):
         return user
 
     def user_name(self, username: str) -> Optional[User]:
-        username =self.session.query(User).filter_by(username=username).first()
-        self.session.expunge(username)
-        return username
+        user = self.session.query(User).filter_by(username=username).first()
+        if user:
+            self.session.expunge(user)
+        return user
 
     def redefinir_senha(self, username: str, nova_senha: str) -> bool:
         user = self.user_name(username)

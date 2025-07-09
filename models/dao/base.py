@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
 #from models import Usuario, Robo
-from typing import List, Optional
+from typing import List, Optional,  Callable
 from sqlalchemy.exc import SQLAlchemyError
 
 class BaseDAO:
-    def __init__(self, session_factory):
+    def __init__(self, session_factory: Callable[[], Session]):
         self.session_factory = session_factory
         self.session: Optional[Session] = None
 

@@ -49,7 +49,7 @@ class LoginView(ctk.CTk):
         self.link_about.configure(font=font_link)
 
         # Evento de clique
-        self.link_about.bind("<Button-1>", lambda e: self.exibir_sobre())
+        self.link_about.bind("<Button-1>", lambda e: self.show_about())
         self.link_about.bind("<Enter>", lambda e: self.link_about.configure(text_color="darkblue"))
         self.link_about.bind("<Leave>", lambda e: self.link_about.configure(text_color="blue"))
 
@@ -65,11 +65,11 @@ class LoginView(ctk.CTk):
         user = self.entry_user.get()
         password = self.entry_pass.get()
         self.label_erro.configure(text="")  # limpa antes de tentar
-        self.controller.autenticar(user, password)
+        self.controller.authenticate(user, password)
 
     
     def show_about(self):
-        self.controller.abrir_sobre()
+        self.controller.show_about()
     
     def show_error(self, mensagem):
         
