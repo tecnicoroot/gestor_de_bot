@@ -1,45 +1,45 @@
 from models.dao.base import BaseDAO
-from models.models import Usuario
+from models.models import User
 import bcrypt
 from typing import List, Optional
 from sqlalchemy.orm import Session
 
-class UsuarioDAO(BaseDAO):
+class UserDAO(BaseDAO):
     
-    def get_by_id(self, usuario_id: int) -> Optional[Usuario]:
-        return self.session.query(Usuario).filter_by(id=usuario_id).first()
+    def get_by_id(self, user_id: int) -> Optional[User]:
+        return self.session.query(User).filter_by(id=user_id).first()
 
-    def get_all(self) -> List[Usuario]:
-        return self.session.query(Usuario).all()
+    def get_all(self) -> List[User]:
+        return self.session.query(User).all()
 
-    def create(self, usuario: Usuario) -> Usuario:
-        usuario.password = bcrypt.hashpw(usuario.password.encode(), bcrypt.gensalt())
-        self.session.add(usuario)
+    def create(self, user: User) -> User:
+        user.password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt())
+        self.session.add(user)
         self.session.flush()
-        return usuario
+        return user
 
-    def delete(self, usuario: Usuario) -> None:
-        self.session.delete(usuario)
+    def delete(self, user: User) -> None:
+        self.session.delete(user)
 
-    def update(self, usuario: Usuario) -> Usuario:
+    def update(self, user: User) -> User:
         self.session.flush()
-        return usuario
+        return user
 
-    def user_name(self, username: str) -> Optional[Usuario]:
-        username =self.session.query(Usuario).filter_by(username=username).first()
+    def user_name(self, username: str) -> Optional[User]:
+        username =self.session.query(User).filter_by(username=username).first()
         self.session.expunge(username)
         return username
 
     def redefinir_senha(self, username: str, nova_senha: str) -> bool:
-        usuario = self.user_name(username)
-        if usuario:
-            usuario.password = bcrypt.hashpw(nova_senha.encode(), bcrypt.gensalt())
+        user = self.user_name(username)
+        if user:
+            user.password = bcrypt.hashpw(nova_senha.encode(), bcrypt.gensalt())
             return True
         return False
 
     def autenticar(self, username: str, senha: str) -> bool:
-        usuario = self.user_name(username)
-        if usuario and bcrypt.checkpw(senha.encode(), usuario.password):
+        user = self.user_name(username)
+        if user and bcrypt.checkpw(senha.encode(), user.password):
             return True
         return False
 

@@ -1,24 +1,24 @@
 from models.dao.base import BaseDAO
-from models.models import Robo
+from models.models import Robot
 from typing import List, Optional
 from sqlalchemy.exc import SQLAlchemyError
 
 
 class RoboDAO(BaseDAO):
-    def get_by_id(self, robo_id: int) -> Optional[Robo]:
-        return self.session.query(Robo).filter_by(id=robo_id).first()
+    def get_by_id(self, robot_id: int) -> Optional[Robot]:
+        return self.session.query(Robot).filter_by(id=robot_id).first()
 
-    def get_all(self) -> List[Robo]:
-        return self.session.query(Robo).all()
+    def get_all(self) -> List[Robot]:
+        return self.session.query(Robot).all()
 
-    def create(self, robo: Robo) -> Robo:
-        self.session.add(robo)
+    def create(self, robot: Robot) -> Robot:
+        self.session.add(robot)
         self.session.flush()
-        return robo
+        return robot
 
-    def delete(self, robo: Robo) -> None:
-        self.session.delete(robo)
+    def delete(self, robot: Robot) -> None:
+        self.session.delete(robot)
 
-    def update(self, robo: Robo) -> Robo:
+    def update(self, robot: Robot) -> Robot:
         self.session.flush()
-        return robo
+        return robot

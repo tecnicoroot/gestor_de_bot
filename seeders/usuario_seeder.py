@@ -5,20 +5,20 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from sqlalchemy.orm import sessionmaker
-from models.models import StatusUsuario, Usuario
+from models.models import StatusUser, User
 from database.db import SessionLocal  # supondo que você tem um `engine`
 
 
 def seed_usuarios():
     session = SessionLocal()
     try:
-        if not session.query(Usuario).filter_by(username="admin2").first():
-            usuario_admin = Usuario(
-                username="admin2",
+        if not session.query(User).filter_by(username="admin").first():
+            user_admin = User(
+                username="admin",
                 password=bcrypt.hashpw(b"123", bcrypt.gensalt()),
-                status=StatusUsuario.ATIVO
+                status=StatusUser.ACTIVE
             )
-            session.add(usuario_admin)
+            session.add(user_admin)
             print("Usuário admin criado.")
         else:
             print("Usuário admin já existe.")

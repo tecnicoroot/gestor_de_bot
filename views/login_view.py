@@ -30,8 +30,8 @@ class LoginView(ctk.CTk):
         # Evento ao perder o foco (clicar fora)
         self.entry_user.bind("<FocusOut>", lambda e: self.entry_user.configure(border_color="gray"))
         
-        # Senha
-        self.label_pass = ctk.CTkLabel(self, text="Senha", font=bold_font)
+        # password
+        self.label_pass = ctk.CTkLabel(self, text="password", font=bold_font)
         self.label_pass.grid(row=1, column=0, padx=10, pady=5)
 
         self.entry_pass = ctk.CTkEntry(self, show="*")
@@ -41,17 +41,17 @@ class LoginView(ctk.CTk):
         self.btn_login = ctk.CTkButton(self, text="Entrar", command=self.autenticar)
         self.btn_login.grid(row=2, column=0, columnspan=2, pady=5)
 
-        self.link_sobre = ctk.CTkLabel(self, text="Sobre", text_color="blue", cursor="hand2")
-        self.link_sobre.grid(row=3, column=0, columnspan=2, pady=1)
+        self.link_about = ctk.CTkLabel(self, text="Sobre", text_color="blue", cursor="hand2")
+        self.link_about.grid(row=3, column=0, columnspan=2, pady=1)
 
         # Sublinha o texto (simulando um link)
         font_link = ctk.CTkFont(underline=True)
-        self.link_sobre.configure(font=font_link)
+        self.link_about.configure(font=font_link)
 
         # Evento de clique
-        self.link_sobre.bind("<Button-1>", lambda e: self.exibir_sobre())
-        self.link_sobre.bind("<Enter>", lambda e: self.link_sobre.configure(text_color="darkblue"))
-        self.link_sobre.bind("<Leave>", lambda e: self.link_sobre.configure(text_color="blue"))
+        self.link_about.bind("<Button-1>", lambda e: self.exibir_sobre())
+        self.link_about.bind("<Enter>", lambda e: self.link_about.configure(text_color="darkblue"))
+        self.link_about.bind("<Leave>", lambda e: self.link_about.configure(text_color="blue"))
 
         # Mensagem de erro
         self.label_erro = ctk.CTkLabel(self, text="", text_color="red")
@@ -62,16 +62,16 @@ class LoginView(ctk.CTk):
         self.entry_user.focus_set()
 
     def autenticar(self):
-        usuario = self.entry_user.get()
-        senha = self.entry_pass.get()
+        user = self.entry_user.get()
+        password = self.entry_pass.get()
         self.label_erro.configure(text="")  # limpa antes de tentar
-        self.controller.autenticar(usuario, senha)
+        self.controller.autenticar(user, password)
 
     
-    def exibir_sobre(self):
+    def show_about(self):
         self.controller.abrir_sobre()
     
-    def exibir_erro(self, mensagem):
+    def show_error(self, mensagem):
         
         if self.label_erro:
             self.label_erro.configure(text=mensagem)

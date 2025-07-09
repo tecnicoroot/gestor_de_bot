@@ -9,37 +9,37 @@ import enum
 Base = declarative_base()
 
 # Enum de status
-class StatusUsuario(enum.Enum):
-    ATIVO = "ativo"
-    INATIVO = "inativo"
-    SUSPENSO = "suspenso"
+class StatusUser(enum.Enum):
+    ACTIVE = "ativo"
+    INACTIVE = "inativo"
+    SUSPENDED = "suspenso"
 
 # Tabela associativa N:N
-usuario_robo_associacao = Table(
-    'usuario_robo',
+user_robot_association = Table(
+    'user_robot',
     Base.metadata,
-    Column('usuario_id', Integer, ForeignKey('usuarios.id'), primary_key=True),
-    Column('robo_id', Integer, ForeignKey('robos.id'), primary_key=True)
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+    Column('robot_id', Integer, ForeignKey('robots.id'), primary_key=True)
 )
 
 # Classe Usuario
-class Usuario(Base):
-    __tablename__ = 'usuarios'
+class User(Base):
+    __tablename__ = 'users'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(100), unique=True, nullable=False)
     password = Column(LargeBinary, nullable=False)
-    status = Column(SqlEnum(StatusUsuario), default=StatusUsuario.ATIVO, nullable=False)
+    status = Column(SqlEnum(StatusUser), default=StatusUser.ACTIVE, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
     # Relacionamento N:N com Robo
-    robos = relationship('Robo', secondary=usuario_robo_associacao, back_populates='usuarios')
+    robots = relationship('Robot', secondary=user_robot_association, back_populates='users')
 
 
 # Classe Robo
-class Robo(Base):
-    __tablename__ = 'robos'
+class Robot(Base):
+    __tablename__ = 'robots'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     id_origin = Column(Integer, nullable=False)
@@ -63,5 +63,5 @@ class Robo(Base):
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
-    # Relacionamento N:N com Usuario
-    usuarios = relationship('Usuario', secondary=usuario_robo_associacao, back_populates='robos')
+    # Relacionamento N:N com User
+    users = relationship('User', secondary=user_robot_association, back_populates='robots')

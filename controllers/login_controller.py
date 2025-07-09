@@ -1,34 +1,34 @@
 from database.db import SessionLocal, engine
 
-from views.principal_view import PrincipalView
-from views.sobre_view import SobreView
-from services.usuario_service import UsuarioService
+from views.main_view import MainView
+from views.about_view import AboutView
+from services.user_service import UserService
 class LoginController:
     def __init__(self, view):
         self.view = view
         self.db = SessionLocal()
-        self.user_service = UsuarioService(SessionLocal)
-        self.sobre_janela = None  # <-- Controlador da janela "Sobre"
+        self.user_service = UserService(SessionLocal)
+        self.about_window = None  # <-- Controlador da janela "Sobre"
 
-    def autenticar(self, usuario, senha):
+    def authenticate(self, user, senha):
         try:
-            if self.user_service.autenticar_usuario(usuario, senha):
+            if self.user_service.authenticate_user(user, senha):
                 self.view.withdraw()
-                user_login = self.user_service.buscar_usuario_name(usuario)
-                self.abrir_principal(user_login)
+                user_login = self.user_service.search_user_name(user)
+                self.open_main(user_login)
             else:
                                
-                self.view.exibir_erro("Usuário ou senha incorretos")
+                self.view.show_error("Usuário ou senha incorretos")
         finally:
             self.db.close()
 
-    def abrir_principal(self, user_login):
-        principal = PrincipalView(self.view, user_login)
+    def open_main(self, user_login):
+        principal = MainView(self.view, user_login)
         principal.grab_set()
 
-    def abrir_sobre(self):
-        if self.sobre_janela is None or not self.sobre_janela.winfo_exists():
-            self.sobre_janela = SobreView(self.view)
+    def show_error(self):
+        if self.about_window is None or not self.about_window.winfo_exists():
+            self.about_window = AboutView(self.view)
             
         else:
-            self.sobre_janela.focus_force()  # Foca na janela já aberta
+            self.about_window.focus_force()  # Foca na janela já aberta
